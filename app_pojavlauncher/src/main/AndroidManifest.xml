@@ -22,7 +22,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
 
     <application
-        android:name=".PojavApplication"
+        android:name="com.voxeljvm.launcher.PojavApplication"
         android:allowBackup="true"
         android:allowNativeHeapPointerTagging="false"
         android:appCategory="game"
@@ -35,7 +35,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MissingStorageActivity"
+            android:name="com.voxeljvm.launcher.MissingStorageActivity"
             android:exported="false" />
 
         <meta-data
@@ -43,7 +43,7 @@
             android:value="ratio_float" />
 
         <activity
-            android:name=".TestStorageActivity"
+            android:name="com.voxeljvm.launcher.TestStorageActivity"
             android:exported="true"
             android:label="@string/app_short_name"
             android:launchMode="singleTop">
@@ -54,11 +54,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LauncherActivity"
+            android:name="com.voxeljvm.launcher.LauncherActivity"
             android:label="@string/app_short_name"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".ImportControlActivity"
+            android:name="com.voxeljvm.launcher.ImportControlActivity"
             android:configChanges="keyboard|keyboardHidden"
             android:exported="true"
             android:launchMode="singleInstance"
@@ -78,41 +78,41 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FatalErrorActivity"
+            android:name="com.voxeljvm.launcher.FatalErrorActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
-        <activity android:name=".ShowErrorActivity"
+        <activity android:name="com.voxeljvm.launcher.ShowErrorActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
         <activity
-            android:name=".ExitActivity"
+            android:name="com.voxeljvm.launcher.ExitActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
         <activity
             android:process=":gui_installer"
-            android:name=".JavaGUILauncherActivity"
+            android:name="com.voxeljvm.launcher.JavaGUILauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".CustomControlsActivity"
+            android:name="com.voxeljvm.launcher.CustomControlsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|keyboard|navigation"
             android:exported="false"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
-                <action android:name=".CustomControlsActivity" />
+                <action android:name="com.voxeljvm.launcher.CustomControlsActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.voxeljvm.launcher.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
             android:launchMode="singleTop"
             android:process=":game"
             android:screenOrientation="sensorLandscape" />
 
         <provider
-            android:name=".scoped.FolderProvider"
+            android:name="com.voxeljvm.launcher.scoped.FolderProvider"
             android:authorities="@string/storageProviderAuthorities"
             android:exported="true"
             android:grantUriPermissions="true"
@@ -122,9 +122,9 @@
             </intent-filter>
         </provider>
 
-        <service android:name=".services.ProgressService"
+        <service android:name="com.voxeljvm.launcher.services.ProgressService"
             android:foregroundServiceType="dataSync"/>
-        <service android:name=".services.GameService" android:process=":game"
+        <service android:name="com.voxeljvm.launcher.services.GameService" android:process=":game"
             android:foregroundServiceType="specialUse">
             <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="This application is intended to run a 3rd-party piece of software which cannot be managed using the activity's saved instance state. This service is used for background persistence of this piece of software."/>
