@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application' version '8.7.2'
+    id 'com.android.application' version '8.13.2'
     id 'org.jetbrains.kotlin.android' version '1.9.24'
 }
 
@@ -101,9 +101,6 @@ android {
 
     compileSdk = 34
 
-    lintOptions {
-        abortOnError false
-    }
 
     signingConfigs {
         customDebug {
@@ -195,8 +192,8 @@ android {
     packagingOptions {
         jniLibs {
             useLegacyPackaging = true
+            pickFirsts += ['**/libbytehook.so']
         }
-        pickFirst '**/libbytehook.so'
     }
 
     buildFeatures {
@@ -210,6 +207,9 @@ android {
     }
 
     buildToolsVersion = '34.0.0'
+    lint {
+        abortOnError false
+    }
 }
 
 afterEvaluate {
