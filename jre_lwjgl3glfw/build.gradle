@@ -4,8 +4,6 @@ plugins {
 
 group = 'org.lwjgl.glfw'
 
-configurations.default.setCanBeResolved(true)
-
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveBaseName = "lwjgl-glfw-classes"
@@ -15,7 +13,7 @@ jar {
       versionFile.write(getGitHash(project.name))
     }
     from {
-        configurations.default.collect {
+        configurations.runtimeClasspath.collect {
             println(it.getName())
             it.isDirectory() ? it : zipTree(it)
         }

@@ -1,6 +1,6 @@
 plugins {
-    id 'com.android.application' version '8.13.2'
-    id 'org.jetbrains.kotlin.android' version '1.9.24'
+    id 'com.android.application' version '9.3.0'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 static def getDate() { return new Date().format('yyyyMMdd') }
@@ -14,60 +14,36 @@ static def getDateSeconds() {
 }
 
 def getVersionName = {
-    // Get the last version tag, as well as the short head of the last commit
-    ByteArrayOutputStream TAG = new ByteArrayOutputStream()
-    ByteArrayOutputStream BRANCH = new ByteArrayOutputStream()
-    // Used by the fallback for github actions
-    ByteArrayOutputStream TAG_PART_COMMIT = new ByteArrayOutputStream()
-    String TAG_STRING
-
-    exec {
+    def runGit = { String... arguments ->
         try {
-            commandLine 'git', 'describe', '--tags'
-            ignoreExitValue true
-            standardOutput = TAG
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    if (TAG.toString() == "") {
-        exec {
-            // Fallback for action builds
-            try {
-                commandLine 'git', 'describe', '--always', '--tags'
-                ignoreExitValue true
-                standardOutput = TAG_PART_COMMIT
-            } catch (Exception e) {
+            def output = providers.exec {
+                commandLine(['git'] + arguments)
+                ignoreExitValue = true
             }
-        }
-    }
-
-
-    if(TAG.toString() != ""){
-        TAG_STRING = TAG.toString()
-    }else {
-        if(TAG_PART_COMMIT.toString().trim() == ""){
-             //Fallback no repo
-            return ("LOCAL-" + "${getDate()}")
-        }else {
-            // Used by github actions
-            TAG_STRING =  'gladiolus-' + "${getDate()}" + "-" + TAG_PART_COMMIT.toString().trim()
-        }
-
-    }
-
-    exec {
-        try {
-            commandLine 'git', 'branch', '--show-current'
-            ignoreExitValue true
-            standardOutput = BRANCH
+            return output.standardOutput.asText.get().trim()
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn("BUILD: Could not run git ${arguments.join(' ')}: ${e.message}")
+            return ''
         }
     }
 
-    return TAG_STRING.trim().replace("-g", "-") + "-" + BRANCH.toString().trim()
+    // Get the last version tag, as well as the short head of the last commit.
+    String tag = runGit('describe', '--tags')
+    String tagString
+
+    if (tag) {
+        tagString = tag
+    } else {
+        // Fallback for GitHub Actions and repositories without tags.
+        String tagPartCommit = runGit('describe', '--always', '--tags')
+        if (!tagPartCommit) {
+            return "LOCAL-${getDate()}"
+        }
+        tagString = "gladiolus-${getDate()}-${tagPartCommit}"
+    }
+
+    String branch = runGit('branch', '--show-current')
+    return tagString.replace('-g', '-') + '-' + branch
 }
 
 def getCFApiKey = {
@@ -143,7 +119,7 @@ android {
         release {
             // Don't set to true or java.awt will be a.a or something similar.
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
@@ -167,10 +143,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
     }
 
     bundle {
@@ -200,9 +172,6 @@ android {
         compose true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = '1.6.0'
-    }
 
     buildToolsVersion = '34.0.0'
     lint {
