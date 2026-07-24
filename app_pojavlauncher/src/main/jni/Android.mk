@@ -86,6 +86,6 @@ LOCAL_SHARED_LIBRARIES := awt_headless
 LOCAL_SRC_FILES := xawt_fake.c
 include $(BUILD_SHARED_LIBRARY)
 
-# delete fake libs after linked
-$(info $(shell (rm $(HERE_PATH)/../jniLibs/*/libawt_headless.so)))
-
+# libawt_headless is only a link-time stub. It is excluded from APK packaging
+# in build.gradle instead of being deleted here, which also keeps ndk-build
+# portable on Windows hosts.

@@ -88,14 +88,6 @@ configurations {
     }
 }
 
-def hasNdkToolchain = {
-    def sdkDir = System.getenv('ANDROID_SDK_ROOT') ?: System.getenv('ANDROID_HOME') ?: project.findProperty('sdk.dir')
-    if (!sdkDir) return false
-    def ndkDir = new File(sdkDir, 'ndk')
-    def ndkBundleDir = new File(sdkDir, 'ndk-bundle')
-    return ndkDir.exists() || ndkBundleDir.exists()
-}.call()
-
 android {
     namespace 'com.voxeljvm.launcher'
 
@@ -164,13 +156,11 @@ android {
         }
     }
 
-    if (hasNdkToolchain) {
-        ndkVersion = "25.2.9519653"
+    ndkVersion = "25.2.9519653"
 
-        externalNativeBuild {
-            ndkBuild {
-                path file('src/main/jni/Android.mk')
-            }
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
         }
     }
 
@@ -192,7 +182,15 @@ android {
     packagingOptions {
         jniLibs {
             useLegacyPackaging = true
-            pickFirsts += ['**/libbytehook.so']
+            pickFirsts += [
+                    '**/libbytehook.so',
+                    '**/libexithook.so',
+                    '**/liblinkerhook.so',
+                    '**/libpojavexec.so',
+                    '**/libpojavexec_awt.so',
+                    '**/libawt_xawt.so'
+            ]
+            excludes += ['**/libawt_headless.so']
         }
     }
 
