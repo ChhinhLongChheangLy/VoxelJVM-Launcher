@@ -1,53 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@drawable/voxel_screen_background">
+
+    <LinearLayout
+        android:id="@+id/brand_lockup"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        android:layout_marginStart="14dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView android:layout_width="36dp" android:layout_height="36dp" android:contentDescription="@string/app_name" android:src="@drawable/ic_voxeljvm_logo" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="7dp" android:fontFamily="@font/noto_sans_bold" android:text="@string/app_short_name" android:textColor="@color/primary_text" android:textSize="15sp" />
+    </LinearLayout>
 
     <com.kdt.mcgui.mcAccountSpinner
         android:id="@+id/account_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_42sdp"
-
-        android:dropDownWidth="wrap_content"
-        android:dropDownVerticalOffset="@dimen/_42sdp"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_width="240dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/voxel_icon_button"
+        android:dropDownWidth="250dp"
+        android:dropDownVerticalOffset="42dp"
+        app:layout_constraintBottom_toBottomOf="@id/brand_lockup"
+        app:layout_constraintEnd_toStartOf="@id/setting_button"
+        app:layout_constraintTop_toTopOf="@id/brand_lockup" />
 
     <ImageButton
         android:id="@+id/setting_button"
-        android:layout_width="@dimen/_52sdp"
-        android:layout_height="@dimen/_42sdp"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="14dp"
+        android:background="@drawable/voxel_icon_button"
+        android:contentDescription="@string/voxel_settings"
+        android:padding="10dp"
         android:src="@drawable/ic_menu_settings"
-        android:scaleType="fitCenter"
-
+        app:layout_constraintBottom_toBottomOf="@id/brand_lockup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/brand_lockup" />
 
-
-
-    <!-- Holding most of the dynamic content -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_fragment"
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/progress_layout"
-        app:layout_constraintTop_toBottomOf="@+id/account_spinner" />
-
+        app:layout_constraintBottom_toTopOf="@id/progress_layout"
+        app:layout_constraintTop_toBottomOf="@id/brand_lockup" />
 
     <com.kdt.mcgui.ProgressLayout
         android:id="@+id/progress_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

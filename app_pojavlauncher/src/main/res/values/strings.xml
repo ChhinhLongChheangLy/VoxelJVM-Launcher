@@ -3,6 +3,14 @@
     <!-- App name part -->
     <string name="app_name">VoxelJVM Launcher</string>
     <string name="app_short_name">VoxelJVM</string>
+    <string name="voxel_home_eyebrow">JAVA EDITION ON ANDROID</string>
+    <string name="voxel_home_title">Your worlds.\nAnywhere.</string>
+    <string name="voxel_home_subtitle">A fast, focused launcher built for Java Minecraft, mods, and touch-first play.</string>
+    <string name="voxel_quick_actions">QUICK ACTIONS</string>
+    <string name="voxel_ready_label">READY TO LAUNCH</string>
+    <string name="voxel_profile_label">GAME PROFILE</string>
+    <string name="voxel_brand_tagline">PLAY BEYOND THE DESKTOP</string>
+    <string name="voxel_settings">Settings</string>
 
     <!-- Action bar part -->
 
@@ -365,7 +373,7 @@
     <string name="preference_category_miscellaneous">Miscellaneous settings</string>
     <string name="preference_category_video">Video settings</string>
     <string name="notification_permission_dialog_title">Permission request</string>
-    <string name="notification_permission_dialog_text">PojavLauncher requires a permission to post notifications to prevent game/modpack downloads from stopping when you leave the app. Without this permission, Android may shut down your downloads when you put PojavLauncher in background mode.</string>
+    <string name="notification_permission_dialog_text">VoxelJVM requires permission to post notifications so game and modpack downloads can continue when you leave the app. Without it, Android may stop background downloads.</string>
     <string name="notification_permission_toast">You can always change your mind later by going into Settings</string>
     <string name="preference_ask_for_notification_title">Allow notifications</string>
     <string name="preference_ask_for_notification_description">Click to re-request the notification permission, required for game/modpack background downloads to work properly.</string>
